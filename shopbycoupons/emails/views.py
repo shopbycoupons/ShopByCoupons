@@ -4,6 +4,7 @@ from .models import Email
 import smtplib
 import ssl
 import pymysql
+from appconfig import *
 
 
 def index(request):
@@ -18,9 +19,9 @@ def email(request):
     emailbody = values["emailbody"]
 
     smtp = smtplib.SMTP()
-    smtp.connect('email-smtp.us-east-1.amazonaws.com', 25)
+    smtp.connect(serviceprovider, 25)
     smtp.starttls()
-    smtp.login('AKIAJ2YLI6QE5JRTSIWQ', 'AiePWord+xh9ui5nDSRRu8y5ril7SkOBCZ/mnSyuctsB')
+    smtp.login(smtp1, smtp2)
     sender = 'crypto@bitcoinsnmore.com'
     receivers = 'aggarwal.anurag@gmail.com'
     message = """X-SES-MESSAGE-TAGS: tagName1=""" + tag1 + """, tagName2=""" + tag2 + """

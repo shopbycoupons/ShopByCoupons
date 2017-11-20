@@ -102,3 +102,4 @@ ENV/
 
 #Config file
 shopbycoupons/config.py
+shopbycoupons/appconfig.py
