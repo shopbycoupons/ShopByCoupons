@@ -1,0 +1,24 @@
+<h1>Send Emails Now</h1>
+
+<br/><br/>
+<form name="email" action="{% url 'emails:email' %}" method="post">
+  {% csrf_token %}
+  Send emails starting from:<br>
+  <input type="text" name="emailstart"><br>
+  Number of emails to be sent:<br>
+  <input type="text" name="numberofemails"><br>
+
+  Tag1:<br>
+  <input type="text" name="tag1"><br>
+
+  Tag2:<br>
+  <input type="text" name="tag2"><br>
+
+  Subject:<br>
+  <input type="text" name="emailsubject"><br>
+
+  Email body<br>
+  <textarea rows="4" cols="50" name="emailbody"></textarea><br>
+
+  <input type="submit" value="Submit">
+</form>
