@@ -55,9 +55,9 @@ Content-Transfer-Encoding: 7bit
 def aws(request):
     content = list(request.POST.items())
     values = dict(content)
-    tag1 = a
-    tag2 = b
-    emailsubject = test
+    tag1 = 'a'
+    tag2 = 'b'
+    emailsubject = 'test'
     emailbody = values
 
     smtp = smtplib.SMTP()
