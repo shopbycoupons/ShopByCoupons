@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, HttpRequest
 from .models import Email
 import smtplib
 import ssl
@@ -12,7 +12,7 @@ def index(request):
     return render(request, 'emails/index.html')
 
 def email(request):
-    content = list(request.POST.items())
+    content = HttpRequest.read()
     values = dict(content)
     tag1 = values["tag1"]
     tag2 = values["tag2"]
@@ -54,13 +54,12 @@ Content-Transfer-Encoding: 7bit
     return HttpResponse(printit)
 
 def aws(request):
-    content = list(request.POST.items())
-    values = dict(content)
-    str_json = json.dumps(values)
+    content = HttpRequest.read()
+
     tag1 = 'a'
     tag2 = 'b'
     emailsubject = 'test'
-    emailbody = str_json
+    emailbody = content
 
     smtp = smtplib.SMTP()
     smtp.connect(serviceprovider, 25)
@@ -89,9 +88,9 @@ Content-Transfer-Encoding: 7bit
 ------=_boundary--
     """
     smtp.sendmail(sender, receivers, message)
-    printit = "Successfully sent email"
+    printit = "arn:aws:sns:eu-west-1:338298589935:Track"
     smtp.quit()
 
 
 
-    return HttpResponse(printit)
+    return HttpResponse(200)
