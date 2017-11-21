@@ -6,6 +6,9 @@ import ssl
 import json
 import pymysql
 from appconfig import *
+from django.views.decorators.csrf import csrf_exempt
+import webbrowser
+
 
 
 def index(request):
@@ -51,8 +54,10 @@ Content-Transfer-Encoding: 7bit
 
     return HttpResponse(printit)
 
+@csrf_exempt
 def aws(request):
-    content = request.read()
-    file = open("C:\\users\\anurag\\shopbycoupons\\shopbycoupons\\emails\\sns.txt",'w')
-    file.write(content)
-    return HttpResponse(200)
+    content = request.POST
+    str1 = content.get('Type')
+    str2 = content.get('SubscribeURL')
+    webbrowser.open(str2)
+    return HttpResponse(str2)
