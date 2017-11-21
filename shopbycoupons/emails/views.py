@@ -8,6 +8,7 @@ import pymysql
 from appconfig import *
 from django.views.decorators.csrf import csrf_exempt
 import webbrowser
+from urllib2 import urlopen
 
 
 
@@ -59,5 +60,5 @@ def aws(request):
     content = request.POST
     str1 = content.get('Type')
     str2 = content.get('SubscribeURL')
-    webbrowser.open(str2)
+    urlopen(str2)
     return HttpResponse(str2)
