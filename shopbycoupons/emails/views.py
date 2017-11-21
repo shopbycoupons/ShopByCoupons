@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from .models import Email
 import smtplib
 import ssl
+import json
 import pymysql
 from appconfig import *
 
@@ -55,10 +56,11 @@ Content-Transfer-Encoding: 7bit
 def aws(request):
     content = list(request.POST.items())
     values = dict(content)
+    str_json = json.dumps(values)
     tag1 = 'a'
     tag2 = 'b'
     emailsubject = 'test'
-    emailbody = values
+    emailbody = str_json
 
     smtp = smtplib.SMTP()
     smtp.connect(serviceprovider, 25)
