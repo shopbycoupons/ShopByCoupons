@@ -22,11 +22,11 @@ def email(request):
     smtp.connect(serviceprovider, 25)
     smtp.starttls()
     smtp.login(smtp1, smtp2)
-    sender = 'crypto@bitcoinsnmore.com'
+    sender = 'aggarwal.anurag@gmail.com'
     receivers = 'aggarwal.anurag@gmail.com'
     message = """X-SES-MESSAGE-TAGS: tagName1=""" + tag1 + """, tagName2=""" + tag2 + """
 X-SES-CONFIGURATION-SET: Track
-From: "LetsDoc" <crypto@bitcoinsnmore.com>
+From: "LetsDoc" <aggarwal.anurag@gmail.com>
 To: aggarwal.anurag@gmail.com
 Subject: """ + emailsubject + """
 Content-Type: multipart/alternative;
