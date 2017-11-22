@@ -58,7 +58,7 @@ Content-Transfer-Encoding: 7bit
 
 @csrf_exempt
 def aws(request):
-    content = request.POST
-    str1 = content.get('SubscribeURL')
-    r = requests.get(str1)
-    return HttpResponse(r.content)
+    a = json.loads(request.body.decode('utf-8'))
+    b = a.get('SubscribeURL')
+    c = requests.get(b)
+    return HttpResponse(b)
