@@ -60,7 +60,7 @@ Content-Transfer-Encoding: 7bit
 def aws(request):
     content = request.POST
     str1 = content.get('Type')
-    if content.get('TopicArn')==topict:
+    if content.get('TopicArn')==topicttesting:
         r = requests.get(content.get('SubscribeURL'))
         return HttpResponse(r)
     else:
