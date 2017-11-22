@@ -59,9 +59,6 @@ Content-Transfer-Encoding: 7bit
 @csrf_exempt
 def aws(request):
     content = request.POST
-    str1 = content.get('Type')
-    if content.get('TopicArn')==topictesting:
-        r = requests.get(content.get('SubscribeURL'))
-        return HttpResponse(r)
-    else:
-        return HttpResponse(content)
+    str1 = content.get('SubscribeURL')
+    r = requests.get(str1)
+    return HttpResponse(content.get('SubscribeURL'))
