@@ -61,4 +61,4 @@ def aws(request):
     content = request.POST
     str1 = content.get('SubscribeURL')
     r = requests.get(str1)
-    return HttpResponse(content.get('SubscribeURL'))
+    return HttpResponse(r.content)
