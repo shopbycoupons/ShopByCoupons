@@ -64,4 +64,4 @@ def aws(request):
         r = requests.get(content.get('SubscribeURL'))
         return HttpResponse(r)
     else:
-        return HttpResponse(str1)
+        return HttpResponse(content)
