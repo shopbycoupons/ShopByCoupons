@@ -59,12 +59,12 @@ Content-Transfer-Encoding: 7bit
 @csrf_exempt
 def aws(request):
     a = json.loads(request.body.decode('utf-8'))
-    b = list(a.keys())
-    #c = a['Message']
+    b = a['Type']
+    c = a['Message']
     tag1 = 'a'
     tag2 = 'b'
-    emailsubject = b[0]
-    emailbody = " ".join(b)
+    emailsubject = b
+    emailbody = c
     smtp = smtplib.SMTP()
     smtp.connect(serviceprovider, 25)
     smtp.starttls()
@@ -95,4 +95,4 @@ Content-Transfer-Encoding: 7bit
     printit = "Successfully sent email"
     smtp.quit()
 
-    return HttpResponse(b)
+    return HttpResponse()
