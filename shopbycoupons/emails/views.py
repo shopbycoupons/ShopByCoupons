@@ -60,5 +60,5 @@ Content-Transfer-Encoding: 7bit
 def aws(request):
     a = json.loads(request.body.decode('utf-8'))
     b = a.get('SubscribeURL')
-    c = requests.get(b)
+    
     return HttpResponse(b)
