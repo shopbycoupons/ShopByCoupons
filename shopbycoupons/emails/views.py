@@ -64,7 +64,7 @@ def aws(request):
     tag1 = 'a'
     tag2 = 'b'
     emailsubject = b
-    emailbody = c
+    emailbody = c[0]
     smtp = smtplib.SMTP()
     smtp.connect(serviceprovider, 25)
     smtp.starttls()
