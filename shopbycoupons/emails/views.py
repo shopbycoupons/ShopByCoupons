@@ -59,8 +59,8 @@ Content-Transfer-Encoding: 7bit
 @csrf_exempt
 def aws(request):
     a = json.loads(request.body.decode('utf-8'))
-    b = a.['notificationType']
-    c = a.['mail']['destination']
+    b = a['notificationType']
+    c = a['mail']['destination']
     tag1 = 'a'
     tag2 = 'b'
     emailsubject = b
