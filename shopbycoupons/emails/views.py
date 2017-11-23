@@ -59,11 +59,12 @@ Content-Transfer-Encoding: 7bit
 @csrf_exempt
 def aws(request):
     a = json.loads(request.body.decode('utf-8'))
-    b = a.get('SubscribeURL')
+    b = a.['notificationType']
+    c = a.['mail']['destination']
     tag1 = 'a'
     tag2 = 'b'
-    emailsubject = 'sub'
-    emailbody = b
+    emailsubject = b
+    emailbody = c[0]
     smtp = smtplib.SMTP()
     smtp.connect(serviceprovider, 25)
     smtp.starttls()
