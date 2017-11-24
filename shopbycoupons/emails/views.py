@@ -10,11 +10,14 @@ from django.views.decorators.csrf import csrf_exempt
 import webbrowser
 import urllib.request
 import requests
+from django.contrib.auth.decorators import login_required
 
 
 
+@login_required
 def index(request):
     return render(request, 'emails/index.html')
+
 
 def email(request):
     content = list(request.POST.items())
