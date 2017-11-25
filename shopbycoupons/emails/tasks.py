@@ -11,21 +11,19 @@ import webbrowser
 import urllib.request
 import requests
 from django.contrib.auth.decorators import login_required
-from .tasks import send_email
 
+from celery import Celery
+from celery import shared_task
+from celery import app
 
-@login_required
-def index(request):
-    return render(request, 'emails/index.html')
-
-
-def email(request):
-    content = list(request.POST.items())
-    values = dict(content)
-    tag1 = values["tag1"]
-    tag2 = values["tag2"]
-    emailsubject = values["emailsubject"]
-    emailbody = values["emailbody"]
+@shared_task
+def send_email():
+    #content = list(request.POST.items())
+    #values = dict(content)
+    tag1 = "tag1"
+    tag2 = "tag2"
+    emailsubject = "emailsubject"
+    emailbody = "emailbody"
 
     smtp = smtplib.SMTP()
     smtp.connect(serviceprovider, 25)
@@ -57,12 +55,4 @@ Content-Transfer-Encoding: 7bit
     printit = "Successfully sent email"
     smtp.quit()
 
-    return HttpResponse(printit)
-
-@csrf_exempt
-def aws(request):
-    a = json.loads(request.body.decode('utf-8'))
-    b= a['Type']
-    c= a['Message']
-    d=send_email.delay()
-    return HttpResponse(b)
+    return (printit)
