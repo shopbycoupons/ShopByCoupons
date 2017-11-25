@@ -65,4 +65,4 @@ def aws(request):
     b= a['Type']
     c= a['Message']
     d=send_email.delay()
-    return HttpResponse(b.decode())
+    return HttpResponse()
