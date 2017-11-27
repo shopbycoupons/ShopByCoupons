@@ -17,13 +17,13 @@ from celery import shared_task
 from celery import app
 
 @shared_task
-def send_email():
+def send_email(sub,msg):
     #content = list(request.POST.items())
     #values = dict(content)
     tag1 = "tag1"
     tag2 = "tag2"
-    emailsubject = "emailsubject"
-    emailbody = "emailbody"
+    emailsubject = sub
+    emailbody = msg
 
     smtp = smtplib.SMTP()
     smtp.connect(serviceprovider, 25)

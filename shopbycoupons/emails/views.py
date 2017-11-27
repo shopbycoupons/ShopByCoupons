@@ -65,7 +65,7 @@ def aws(request):
     b= a['Type']
     c= a['Message']
     if b=='Notification':
-        d=send_email.delay()
+        d=send_email.delay(b, c)
         return HttpResponse()
     else:
         return HttpResponse()
