@@ -11,7 +11,7 @@ from celery import shared_task
 from celery import app
 
 @shared_task
-def send_email(id, **c):
+def send_email(id, c):
     ret='added'
     pk = id
     eid = c['mail']['destination']
