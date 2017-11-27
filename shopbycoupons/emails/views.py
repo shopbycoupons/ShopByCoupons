@@ -62,10 +62,12 @@ Content-Transfer-Encoding: 7bit
 @csrf_exempt
 def aws(request):
     a = json.loads(request.body.decode('utf-8'))
+    m = request.META
+    l = m['HTTP_X_AMZ_SNS_MESSAGE_ID']
     b= a['Type']
     c= a['Message']
-    if b=='Notification':
-        d = send_email.delay(b, c)
+    if b=='SubscriptionConfirmation':
+        d = send_email.delay(l, c)
         return HttpResponse(d)
     else:
-        return HttpResponse('random')
+        return HttpResponse(c['mail']['destination'])

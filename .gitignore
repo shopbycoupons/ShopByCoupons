@@ -106,3 +106,6 @@ shopbycoupons/appconfig.py
 
 #run time writting
 shopbycoupons/emails/sns.txt
+
+#local migrations
+shopbycoupons/emails/migrations
