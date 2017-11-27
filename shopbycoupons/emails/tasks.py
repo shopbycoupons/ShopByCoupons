@@ -11,8 +11,9 @@ from celery import shared_task
 from celery import app
 
 @shared_task
-def send_email(pk, stat, eml, dt):
+def send_email(pk, msg):
     ret='added'
+    stat = msg
     connection = pymysql.connect(host="localhost",user=proddbuser, passwd=proddbpass, database=proddbname )
     cursor = connection.cursor()
     try:
