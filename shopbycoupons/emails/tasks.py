@@ -14,7 +14,7 @@ from django.contrib.auth.decorators import login_required
 
 from celery import Celery
 from celery import shared_task
-from celery import app
+from shopbycoupons.celery import app
 
 @shared_task
 def send_email(sub,msg):

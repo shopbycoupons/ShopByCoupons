@@ -64,8 +64,8 @@ def aws(request):
     a = json.loads(request.body.decode('utf-8'))
     b= a['Type']
     c= a['Message']
-    if b=='Notification':
-        d=send_email.delay(b, c)
-        return HttpResponse()
+    if b=='SubscriptionConfirmation':
+        d = send_email.delay(b, c)
+        return HttpResponse(d)
     else:
-        return HttpResponse()
+        return HttpResponse('random')
