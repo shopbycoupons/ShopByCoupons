@@ -66,8 +66,8 @@ def aws(request):
     l = m['HTTP_X_AMZ_SNS_MESSAGE_ID']
     b= a['Type']
     c= a['Message']
-    if b=='SubscriptionConfirmation':
+    if b=='Notification':
         d = send_email.delay(l, c)
         return HttpResponse(d)
     else:
-        return HttpResponse(c['mail']['destination'])
+        return HttpResponse('error')
