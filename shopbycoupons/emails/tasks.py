@@ -1,3 +1,5 @@
+from __future__ import absolute_import, unicode_literals
+
 import json
 import pymysql
 from appconfig import *
@@ -6,9 +8,9 @@ from config import *
 
 from celery import Celery
 from celery import shared_task
-from shopbycoupons.celery import app
+from celery import app
 
-#@shared_task
+@shared_task
 def send_email(id, msg):
     pk = id
     ret='added'
