@@ -11,13 +11,17 @@ from celery import shared_task
 from celery import app
 
 @shared_task
-def send_email(pk, msg):
+def send_email(id, **c):
     ret='added'
-    stat = msg
+    pk = id
+    eid = c['mail']['destination']
+    status = c['eventType']
+    date = c['mail']['timestamp']
+
     connection = pymysql.connect(host="localhost",user=proddbuser, passwd=proddbpass, database=proddbname )
     cursor = connection.cursor()
     try:
-        cursor.execute("insert into ecamp (id, status) values (%s, %s)", (pk, stat))
+        cursor.execute("insert into ecamp (id, eid, status, date) values (%s, %s, %s, %s)", (pk, eid, status, date))
         connection.commit()
     except pymysql.err.IntegrityError as e:
         if e.args[0] == 1062:
