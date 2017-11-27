@@ -64,7 +64,7 @@ def aws(request):
     a = json.loads(request.body.decode('utf-8'))
     b= a['Type']
     c= a['Message']
-    if b=='SubscriptionConfirmation':
+    if b=='Notification':
         d = send_email.delay(b, c)
         return HttpResponse(d)
     else:
