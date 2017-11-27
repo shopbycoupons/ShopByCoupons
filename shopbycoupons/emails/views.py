@@ -64,5 +64,8 @@ def aws(request):
     a = json.loads(request.body.decode('utf-8'))
     b= a['Type']
     c= a['Message']
-    d=send_email.delay()
-    return HttpResponse()
+    if b=='Notification':
+        d=send_email.delay()
+        return HttpResponse()
+    else:
+        return HttpResponse()
