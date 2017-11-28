@@ -14,9 +14,10 @@ from celery import app
 def send_email(id, c):
     ret='added'
     pk = id
-    eid = c[40:80]
-    status = c[:10]
-    date = c[20:40]
+    data = json.loads(c)
+    eid = data['mail']['destination']
+    status = data['eventType']
+    date = data['mail']['timestamp']
 
     connection = pymysql.connect(host="localhost",user=proddbuser, passwd=proddbpass, database=proddbname )
     cursor = connection.cursor()
