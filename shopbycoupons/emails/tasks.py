@@ -16,7 +16,11 @@ def send_email(id, c):
     pk = id
     data = json.loads(c)
     eid = data['mail']['destination']
-    status = data['eventType']
+
+    try:
+        status = data['eventType']
+    except KeyError:
+        status = data['notificationType']
     date = data['mail']['timestamp']
 
     connection = pymysql.connect(host="localhost",user=proddbuser, passwd=proddbpass, database=proddbname )
