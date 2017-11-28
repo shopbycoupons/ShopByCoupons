@@ -50,26 +50,27 @@ def email(request):
     for item in listofemails:
         sender = 'aggarwal.anurag@gmail.com'
         receivers = 'aggarwal.anurag@gmail.com'
-        message = """X-SES-MESSAGE-TAGS: tagName1=""" + tag1 + """, tagName2=""" + tag2 + """
-    X-SES-CONFIGURATION-SET: Track
-    From: "LetsDoc" <aggarwal.anurag@gmail.com>
-    To: aggarwal.anurag@gmail.com
-    Subject: """ + emailsubject + """
-    Content-Type: multipart/alternative;
-        boundary="----=_boundary"
+        message = """
+X-SES-MESSAGE-TAGS: tagName1=""" + tag1 + """, tagName2=""" + tag2 + """
+X-SES-CONFIGURATION-SET: Track
+From: "LetsDoc" <aggarwal.anurag@gmail.com>
+To: aggarwal.anurag@gmail.com
+Subject: """ + emailsubject + """
+Content-Type: multipart/alternative;
+    boundary="----=_boundary"
 
-    ------=_boundary
-    Content-Type: text/plain; charset=UTF-8
-    Content-Transfer-Encoding: 7bit
+------=_boundary
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-    body
-    ------=_boundary
-    Content-Type: text/html; charset=UTF-8
-    Content-Transfer-Encoding: 7bit
+body
+------=_boundary
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-    """ + emailbody + """
-    ------=_boundary--
-        """
+""" + emailbody + """
+------=_boundary--
+    """
         smtp.sendmail(sender, receivers, message)
 
     printit = "Successfully sent email"
