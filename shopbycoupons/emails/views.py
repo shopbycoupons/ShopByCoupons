@@ -32,8 +32,8 @@ def email(request):
     emailbody = values["emailbody"]
     estart = values["emailstart"]
     noemails = values["numberofemails"]
-    
-    cursor.execute("select email from email limit %d, %d", (int(estart), int(noemails)))
+
+    cursor.execute("select email from email limit %s, %s", (int(estart), int(noemails)))
     emailsfromdb = (cursor.fetchall())
     listofemails = []
 
