@@ -6,6 +6,7 @@ import ssl
 import json
 import pymysql
 from appconfig import *
+from config import *
 from django.views.decorators.csrf import csrf_exempt
 import webbrowser
 import urllib.request
