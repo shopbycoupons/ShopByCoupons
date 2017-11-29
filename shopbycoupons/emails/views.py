@@ -90,3 +90,46 @@ def aws(request):
         return HttpResponse(d)
     else:
         return HttpResponse('error')
+
+def subscribe(request):
+    content = list(request.POST.items())
+    values = dict(content)
+    name = values["name"]
+    email = values["email"]
+
+    smtp = smtplib.SMTP()
+    smtp.connect(serviceprovider, 25)
+    smtp.starttls()
+    smtp.login(smtp1, smtp2)
+    sender = 'aggarwal.anurag@gmail.com'
+    receivers = email
+    tag1 = 'sbc'
+    tag2 = 'subscription'
+    emailsubject = 'ShopByCoupons : Subscription Confirmation'
+    emailbody = 'Thanks for Subscribing'
+    message = """
+X-SES-MESSAGE-TAGS: tagName1=""" + tag1 + """, tagName2=""" + tag2 + """
+X-SES-CONFIGURATION-SET: Track
+From: "ShopByCoupons" <aggarwal.anurag@gmail.com>
+To: aggarwal.anurag@gmail.com
+Subject: """ + emailsubject + """
+Content-Type: multipart/alternative;
+boundary="----=_boundary"
+
+------=_boundary
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+body
+------=_boundary
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+""" + emailbody + """
+------=_boundary--
+"""
+
+    smtp.sendmail(sender, receivers, message)
+    printit = "Subscription confirmation email sent"
+    smtp.quit()
+    return HttpResponse(printit)

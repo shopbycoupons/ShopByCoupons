@@ -125,7 +125,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-# BASE_DIR,
+r"C:\Users\Anurag\ShopByCoupons\shopbycoupons\shopbycoupons\static",
 )
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 

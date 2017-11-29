@@ -17,11 +17,14 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.auth import views
 from emails.forms import LoginForm
+from . import hviews
+from django.conf import settings
 
 
 
 
 urlpatterns = [
+    url(r'^$', hviews.abc),
     url(r'^emails/', include('emails.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/login/$', views.login, {'template_name': 'login.html', 'authentication_form': LoginForm}, name = 'login'),
