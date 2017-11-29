@@ -133,3 +133,6 @@ Content-Transfer-Encoding: 7bit
     printit = "Subscription confirmation email sent"
     smtp.quit()
     return HttpResponse(printit)
+
+def unsubscribe(request):
+    return render(request, 'emails/unsubscribe.html')
