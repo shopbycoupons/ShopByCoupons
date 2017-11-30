@@ -49,12 +49,12 @@ def email(request):
     smtp.login(smtp3, smtp4)
     for item in listofemails:
         sender = 'alerts@shopbycoupons.in'
-        receivers = item
+        receivers = 'aggarwal.anurag@gmail.com'
         message = """
 X-SES-MESSAGE-TAGS: tagName1=""" + tag1 + """, tagName2=""" + tag2 + """
 X-SES-CONFIGURATION-SET: Track
 From: "LetsDoc" <alerts@shopbycoupons.in>
-To: """ + item + """
+To: "aggarwal.anurag@gmail.com"
 Subject: """ + emailsubject + """
 Content-Type: multipart/alternative;
     boundary="----=_boundary"
