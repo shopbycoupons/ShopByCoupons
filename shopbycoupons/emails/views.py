@@ -46,15 +46,15 @@ def email(request):
     smtp = smtplib.SMTP()
     smtp.connect(serviceprovider, 25)
     smtp.starttls()
-    smtp.login(smtp1, smtp2)
+    smtp.login(smtp3, smtp4)
     for item in listofemails:
-        sender = 'aggarwal.anurag@gmail.com'
-        receivers = 'aggarwal.anurag@gmail.com'
+        sender = 'alerts@shopbycoupons.in'
+        receivers = item
         message = """
 X-SES-MESSAGE-TAGS: tagName1=""" + tag1 + """, tagName2=""" + tag2 + """
 X-SES-CONFIGURATION-SET: Track
-From: "LetsDoc" <aggarwal.anurag@gmail.com>
-To: aggarwal.anurag@gmail.com
+From: "LetsDoc" <alerts@shopbycoupons.in>
+To: """item"""
 Subject: """ + emailsubject + """
 Content-Type: multipart/alternative;
     boundary="----=_boundary"
