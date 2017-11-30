@@ -88,6 +88,9 @@ def aws(request):
     if b=='Notification':
         d = send_email.delay(l, c)
         return HttpResponse(d)
+    elif b=='SubscriptionConfirmation' && a['TopicArn']== tarn:
+        z = requests.get(a['SubscribeURL'])
+        return HttpResponse(z)    
     else:
         return HttpResponse('error')
 
