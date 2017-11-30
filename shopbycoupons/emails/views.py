@@ -52,7 +52,7 @@ def email(request):
         receivers = 'aggarwal.anurag@gmail.com'
         message = """\
 X-SES-MESSAGE-TAGS: tagName1="""+ tag1 +""", tagName2=""" + tag2+"""
-X-SES-CONFIGURATION-SET: TrackS
+X-SES-CONFIGURATION-SET: Track
 From: alerts@shopbycoupons.in
 To: aggarwal.anurag@gmail.com
 Subject: """+ emailsubject +"""
@@ -69,8 +69,9 @@ Content-Type: text/html; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
     """+ emailbody +"""
-    ------=_boundary--
-        """
+
+------=_boundary--
+"""
         smtp.sendmail(sender, receivers, message)
 
     printit = "Successfully sent email"
