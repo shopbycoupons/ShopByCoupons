@@ -35,7 +35,7 @@ def email(request):
 
     cursor.execute("select email from email limit %s, %s", (int(estart), int(noemails)))
     emailsfromdb = (cursor.fetchall())
-    listofemails = []
+    listofemails = ['aggarwal.anurag@gmail.com']
 
     for item in emailsfromdb:
         listofemails.append(item[0])
@@ -49,12 +49,12 @@ def email(request):
     smtp.login(smtp3, smtp4)
     for item in listofemails:
         sender = 'LetsDoc <alerts@shopbycoupons.in>'
-        receivers = 'aggarwal.anurag@gmail.com'
+        receivers = item
         message = """\
 X-SES-MESSAGE-TAGS: tagName1="""+ tag1 +""", tagName2=""" + tag2+"""
 X-SES-CONFIGURATION-SET: Track
 From: alerts@shopbycoupons.in
-To: aggarwal.anurag@gmail.com
+To: """ + item +"""
 Subject: """+ emailsubject +"""
 Content-Type: multipart/alternative;
     boundary="----=_boundary"
