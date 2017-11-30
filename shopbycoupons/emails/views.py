@@ -50,11 +50,11 @@ def email(request):
     for item in listofemails:
         sender = 'LetsDoc <alerts@shopbycoupons.in>'
         receivers = 'aggarwal.anurag@gmail.com'
-        message = """X-SES-MESSAGE-TAGS: tagName1=""" + tag1 +""", tagName2=""" + tag2 +"""
+        message = """X-SES-MESSAGE-TAGS: tagName1=KG, tagName2=1st100
     X-SES-CONFIGURATION-SET: Track
     From: alerts@shopbycoupons.in
     To: aggarwal.anurag@gmail.com
-    Subject: """ + emailsubject +"""
+    Subject: Rs.875 only for complete health test
     Content-Type: multipart/alternative;
         boundary="----=_boundary"
 
@@ -67,7 +67,30 @@ def email(request):
     Content-Type: text/html; charset=UTF-8
     Content-Transfer-Encoding: 7bit
 
-    """ + emailbody + """
+    <table bgcolor="#c7c7c7" cellspacing="50" cellpadding="20">
+      <tr bgcolor="#c7c7c7">
+        <td style="background-color:#f4f4f4">
+          <img src="https://letsdoc.in/assets/img/letsdoclogo2.png" width="200px"/><br/>
+          <p style="font-size:100%">Healthcare Delivered Online</p>
+          <br/>
+          <p style="font-size:120%">The comprehensive health test below Rs.900 is back. Now book the <a href="https://letsdoc.in/aarogyam_thyrocare_packages/LETSDOC-SPECIAL-OFFER/11?affiliate=campext1">LetsDoc Special Package</a> with 78 test parameters and pay only Rs.1750 for 2 people.<br/><br/>
+
+          <b>The package includes tests for:</b><br/>
+           Blood Sugar, Cholesterol, CBC, Liver Function, Kidney Function, Thyroid, Urine, and more ...<br/><br/>
+
+          <a href="https://letsdoc.in/aarogyam_thyrocare_packages/LETSDOC-SPECIAL-OFFER/11?affiliate=campext1">Book now and get 78 parameters for Rs.875/person.</a>
+          <br/>
+          Also, get 100 cashback in the form of LetsDoc credits for bookings before 29th September 2017.
+          <br/><br/><br/>
+          Team LetsDoc<br/>
+          Healthcare delivered online
+          <br/><br/>
+          In case of any queries, please reply to this mail.
+          <br/><br/>
+        </p>
+        </td>
+      </tr>
+    </table>
 
     ------=_boundary--
         """
