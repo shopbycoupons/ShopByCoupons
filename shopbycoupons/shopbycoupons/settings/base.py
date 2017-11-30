@@ -56,7 +56,7 @@ ROOT_URLCONF = 'shopbycoupons.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': ['plates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
