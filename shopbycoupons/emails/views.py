@@ -44,7 +44,7 @@ def email(request):
 
 
     smtp = smtplib.SMTP()
-    smtp.connect(serviceprovider, 25)
+    smtp.connect(svcpvd, 25)
     smtp.starttls()
     smtp.login(smtp3, smtp4)
     for item in listofemails:
