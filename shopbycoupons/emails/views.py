@@ -54,7 +54,7 @@ def email(request):
 X-SES-MESSAGE-TAGS: tagName1=""" + tag1 + """, tagName2=""" + tag2 + """
 X-SES-CONFIGURATION-SET: Track
 From: "LetsDoc" <alerts@shopbycoupons.in>
-To: """item"""
+To: """ + item"""
 Subject: """ + emailsubject + """
 Content-Type: multipart/alternative;
     boundary="----=_boundary"
