@@ -25,7 +25,7 @@ def send_email(id, c):
 
     connection = pymysql.connect(host="localhost",user=proddbuser, passwd=proddbpass, database=proddbname )
     cursor = connection.cursor()
-    if status == 'Bounce' or status == 'Complaint':
+    if status == 'Bounce' or status == 'Complaint' or status == 'Click' or status == 'Open':
         cursor.execute ("""\
             UPDATE email
             SET status=%s, date=%s
