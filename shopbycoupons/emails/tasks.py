@@ -28,9 +28,9 @@ def send_email(id, c):
     if status == 'Bounce' or status == 'Complaint':
         cursor.execute ("""
             UPDATE email
-            SET status=%s
+            SET status=%s, date=%s
             WHERE email=%s
-        """, (status, eid))
+        """, (status, date, email))
     try:
         cursor.execute("insert into ecamp (id, eid, status, date) values (%s, %s, %s, %s)", (pk, eid, status, date))
     except pymysql.err.IntegrityError as e:
