@@ -53,6 +53,7 @@ def email(request):
     for item in listofemails:
         sender = 'LetsDoc <alerts@shopbycoupons.in>'
         receivers = item
+        url = "http://shopbycoupons.in/emails/unsubscribe/?email=" + item
         message = """\
 X-SES-MESSAGE-TAGS: tagName1="""+ tag1 +""", tagName2=""" + tag2+"""
 X-SES-CONFIGURATION-SET: Track
@@ -71,7 +72,27 @@ body
 Content-Type: text/html; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
+<table bgcolor="#c7c7c7" cellspacing="50" cellpadding="20">
+  <tr bgcolor="#c7c7c7">
+    <td style="background-color:#f4f4f4">
+      <img src="https://letsdoc.in/assets/img/letsdoclogo2.png" width="200px"/><br/>
+      <p style="font-size:100%">Healthcare Delivered Online</p>
+      <br/>
+      <p style="font-size:120%">
     """+ emailbody +"""
+<br/>
+</td>
+  </tr>
+  <tr>
+  <td>
+  <p style="font-size:120%">Team LetsDoc<br/>
+Healthcare delivered online<br/>
+In case of any queries, please reply to this mail.
+<br/><br/>
+<a href="""+ url +""">Click here to unsubscribe</a>
+</p>
+</td></tr>
+</table>
 
 ------=_boundary--
 """
@@ -133,6 +154,7 @@ Content-Type: text/html; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 """ + emailbody + """
+
 ------=_boundary--
 """
 
