@@ -25,13 +25,18 @@ def send_email(id, c):
 
     connection = pymysql.connect(host="localhost",user=proddbuser, passwd=proddbpass, database=proddbname )
     cursor = connection.cursor()
+    if status == 'Bounce' or status == 'Complaint':
+        cursor.execute ("""
+            UPDATE email
+            SET status=%s
+            WHERE email=%s
+        """, (status, eid))
     try:
         cursor.execute("insert into ecamp (id, eid, status, date) values (%s, %s, %s, %s)", (pk, eid, status, date))
-        connection.commit()
     except pymysql.err.IntegrityError as e:
         if e.args[0] == 1062:
             ret = 'pass'
             pass
-
+    connection.commit()
     connection.close()
     return (ret)
