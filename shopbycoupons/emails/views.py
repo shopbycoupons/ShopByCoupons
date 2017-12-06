@@ -38,8 +38,9 @@ def email(request):
     listofemails = ['aggarwal.anurag@gmail.com']
 
     for item in emailsfromdb:
-        if item[1] !='Bounce' or item[1] != 'Complaint' or item[1] != 'Unsubscribe':
-            listofemails.append(item[0])
+        if item[1] =='Bounce' or item[1] == 'Complaint' or item[1] == 'Unsubscribe' or item[1] =='bounce':
+            continue
+        listofemails.append(item[0])
 
     listofemails = [x.strip() for x in listofemails]
 
