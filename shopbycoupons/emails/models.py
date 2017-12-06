@@ -5,7 +5,7 @@ from django.db import models
 class Email(models.Model):
     id = models.IntegerField(primary_key=True)
     email = models.CharField(max_length=100, blank=True, null=True)
-    status = models.CharField(max_length=10, blank=True, null=True)
+    status = models.CharField(max_length=30, blank=True, null=True)
     date = models.CharField(max_length=50, blank=True, null=True)
 
     class Meta:
