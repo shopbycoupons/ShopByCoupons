@@ -13,7 +13,7 @@ import urllib.request
 import requests
 from django.contrib.auth.decorators import login_required
 from .tasks import send_email
-
+from datetime import datetime
 
 @login_required
 def index(request):
@@ -163,8 +163,18 @@ Content-Transfer-Encoding: 7bit
     return HttpResponse(printit)
 
 def unsubscribe(request):
-    path_info = request.META.get('PATH_INFO')
-    http_host = request.META.get('HTTP_HOST')
-    url = request.META
-    return HttpResponse(url)
-    #return render(request, 'emails/unsubscribe.html')
+    date = datetime.now()
+    url = request.META.get('QUERY_STRING')
+    eid = url[6:]
+    status = 'Unsubscribe'
+    connection = pymysql.connect(host="localhost",user=proddbuser, passwd=proddbpass, database=proddbname )
+    cursor = connection.cursor()
+    cursor.execute ("""\
+            UPDATE email
+            SET status=%s, date=%s
+            WHERE email=%s
+        """, (status, date, eid))
+    connection.commit()
+    connection.close()
+
+    return render(request, 'emails/unsubscribe.html')
