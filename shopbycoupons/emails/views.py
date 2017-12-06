@@ -163,4 +163,7 @@ Content-Transfer-Encoding: 7bit
     return HttpResponse(printit)
 
 def unsubscribe(request):
-    return render(request, 'emails/unsubscribe.html')
+    path_info = request.META.get('PATH_INFO')
+    http_host = request.META.get('HTTP_HOST')
+    url = path_info + http_host
+    return render(request, url + 'emails/unsubscribe.html')
