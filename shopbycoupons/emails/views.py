@@ -80,18 +80,16 @@ Content-Transfer-Encoding: 7bit
       <br/>
       <p style="font-size:120%">
     """+ emailbody +"""
-<br/>
-</td>
-  </tr>
-  <tr>
-  <td>
-  <p style="font-size:120%">Team LetsDoc<br/>
+<br/><br/>
+Team LetsDoc<br/>
 Healthcare delivered online<br/>
 In case of any queries, please reply to this mail.
 <br/><br/>
 <a href="""+ url +""">Click here to unsubscribe</a>
 </p>
-</td></tr>
+</td>
+  </tr>
+  
 </table>
 
 ------=_boundary--
