@@ -56,7 +56,7 @@ def email(request):
         message = """\
 X-SES-MESSAGE-TAGS: tagName1="""+ tag1 +""", tagName2=""" + tag2+"""
 X-SES-CONFIGURATION-SET: Track
-From: alerts@shopbycoupons.in
+From: LetsDoc <alerts@shopbycoupons.in>
 To: """ + item +"""
 Subject: """+ emailsubject +"""
 Content-Type: multipart/alternative;
