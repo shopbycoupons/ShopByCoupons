@@ -170,11 +170,10 @@ def unsubscribe(request):
     connection = pymysql.connect(host="localhost",user=proddbuser, passwd=proddbpass, database=proddbname )
     cursor = connection.cursor()
     cursor.execute ("""\
-            UPDATE email
-            SET status=%s, date=%s
-            WHERE email=%s
-        """, (status, date, eid))
+        UPDATE email
+        SET status=%s, date=%s
+        WHERE email=%s
+    """, (status, date, eid))
     connection.commit()
     connection.close()
-
     return render(request, 'emails/unsubscribe.html')
