@@ -80,8 +80,9 @@ Content-Transfer-Encoding: 7bit
       <br/>
       <p style="font-size:120%">
     """+ emailbody +"""
-<br/><br/>
-Team LetsDoc<br/>
+<br/><br/><br/>
+<b>Regards<br/>
+Team LetsDoc<br/></b>
 Healthcare delivered online<br/>
 In case of any queries, please reply to this mail.
 <br/><br/>
@@ -89,7 +90,7 @@ In case of any queries, please reply to this mail.
 </p>
 </td>
   </tr>
-  
+
 </table>
 
 ------=_boundary--
