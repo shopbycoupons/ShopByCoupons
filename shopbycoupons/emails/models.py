@@ -16,8 +16,7 @@ class Email(models.Model):
         return self.email
 
 class campaign(models.Model):
-    campid = models.IntegerField(primary_key=True)
-    date = models.CharField(max_length=50, blank=True, null=True)
+    id = models.CharField(max_length=100, primary_key=True)
     tag1 = models.CharField(max_length=100, blank=True, null=True)
     tag2 = models.CharField(max_length=100, blank=True, null=True)
     sent = models.IntegerField(blank=True, null=True)
