@@ -43,6 +43,12 @@ def email(request):
         listofemails.append(item[0])
 
     listofemails = [x.strip() for x in listofemails]
+    sent = len (listofemails)
+    date = datetime.now()
+    cursor.execute("insert into emails_campaign (tag1, tag2, sent, date) values (%s, %s, %s, %s)", (tag1, tag2, sent, date))
+    connection.commit()
+    connection.close()
+
 
 
     smtp = smtplib.SMTP()
@@ -52,7 +58,7 @@ def email(request):
     for item in listofemails:
         sender = 'LetsDoc <alerts@shopbycoupons.in>'
         receivers = item
-        url = "http://shopbycoupons.in/emails/unsubscribe/?email=" + item
+        url = "http://shopbycoupons.in/emails/unsubscribe/?email=" + item + "&tag1=" + tag1 + "&tag2=" + tag2
         message = """\
 X-SES-MESSAGE-TAGS: tagName1="""+ tag1 +""", tagName2=""" + tag2+"""
 X-SES-CONFIGURATION-SET: Track
@@ -164,7 +170,10 @@ Content-Transfer-Encoding: 7bit
 def unsubscribe(request):
     date = datetime.now()
     url = request.META.get('QUERY_STRING')
-    eid = url[6:]
+    urlstring = url.split("&")
+    eid = urlstring[0][6:]
+    tag1 = urlstring[1][5:]
+    tag2 = urlstring[2][5:]
     status = 'Unsubscribe'
     connection = pymysql.connect(host="localhost",user=proddbuser, passwd=proddbpass, database=proddbname )
     cursor = connection.cursor()
@@ -173,6 +182,15 @@ def unsubscribe(request):
         SET status=%s, date=%s
         WHERE email=%s
     """, (status, date, eid))
+
+    unsubscribes = cursor.execute("select unsubscribes from emails_campaign")
+    unsubscribes = unsubscribes + 1
+    cursor.execute ("""\
+        UPDATE emails_campaign
+        SET unsubscribes=%d
+        WHERE tag1=%s AND tag2=%s
+    """, (unsubscribes, tag1, tag2))
+
     connection.commit()
     connection.close()
     return render(request, 'emails/unsubscribe.html')
