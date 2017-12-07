@@ -24,23 +24,25 @@ def send_email(id, c):
     tagname1 = tagvalues[0].split("=")
     tag1 = tagname1[1]
     tag2 = tagname2[1]
-
-
-    try:
-        status = data['eventType']
-    except KeyError:
-        pass
     date = data['mail']['timestamp']
 
     connection = pymysql.connect(host="localhost",user=proddbuser, passwd=proddbpass, database=proddbname )
     cursor = connection.cursor()
     cursor.execute("insert into edump (id, dump) values (%s, %s)", (pk, datastr))
-    if status == 'Bounce' or status == 'Complaint' or status == 'Click' or status == 'Open':
-        cursor.execute ("""\
-            UPDATE email
-            SET status=%s, date=%s
-            WHERE email=%s
-        """, (status, date, eid))
+
+    try:
+        status = data['eventType']
+        if status == 'Bounce' or status == 'Complaint' or status == 'Click' or status == 'Open':
+            cursor.execute ("""\
+                UPDATE email
+                SET status=%s, date=%s
+                WHERE email=%s
+            """, (status, date, eid))
+
+    except KeyError:
+        pass
+
+
 
     complaints = cursor.execute("select complaints from emails_campaign")
     bounces = cursor.execute("select bounces from emails_campaign")
@@ -81,7 +83,7 @@ def send_email(id, c):
                 SET opens=%s
                 WHERE tag1=%s AND tag2=%s
             """, (int(opens), tag1, tag2))
-            
+
     except pymysql.err.IntegrityError as e:
         if e.args[0] == 1062:
             ret = 'pass'
