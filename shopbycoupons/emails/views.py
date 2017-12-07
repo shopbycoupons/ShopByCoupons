@@ -193,9 +193,9 @@ def unsubscribe(request):
     unsubscribes = unsubscribes + 1
     cursor.execute ("""\
         UPDATE emails_campaign
-        SET unsubscribes=%d
+        SET unsubscribes=%s
         WHERE tag1=%s AND tag2=%s
-    """, (unsubscribes, tag1, tag2))
+    """, (int(unsubscribes), tag1, tag2))
 
     connection.commit()
     connection.close()

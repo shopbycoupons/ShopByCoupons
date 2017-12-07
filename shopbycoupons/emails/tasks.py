@@ -17,10 +17,10 @@ def send_email(id, c):
     data = json.loads(c)
     eid = data['mail']['destination']
 
-    tagheader= a['mail']['headers'][1]['value']
-    tagvales = b.split(",")
-    tagname2 = c[1].split("=")
-    tagname1 = c[0].split("=")
+    tagheader= data['mail']['headers'][1]['value']
+    tagvales = tagheader.split(",")
+    tagname2 = tagvalues[1].split("=")
+    tagname1 = tagvalues[0].split("=")
     tag1 = tagname1[1]
     tag2 = tagname2[1]
 
@@ -55,33 +55,33 @@ def send_email(id, c):
         bounces = bounces + 1
         cursor.execute ("""\
             UPDATE emails_campaign
-            SET bounces=%d
+            SET bounces=%s
             WHERE tag1=%s AND tag2=%s
-        """, (bounces, tag1, tag2))
+        """, (int(bounces), tag1, tag2))
 
     elif status == 'Complaint':
         complaints = complaints + 1
         cursor.execute ("""\
             UPDATE emails_campaign
-            SET complaints=%d
+            SET complaints=%s
             WHERE tag1=%s AND tag2=%s
-        """, (complaints, tag1, tag2))
+        """, (int(complaints), tag1, tag2))
 
     elif status == 'Click':
         clicks = clicks + 1
         cursor.execute ("""\
             UPDATE emails_campaign
-            SET clicks=%d
+            SET clicks=%s
             WHERE tag1=%s AND tag2=%s
-        """, (clicks, tag1, tag2))
+        """, (int(clicks), tag1, tag2))
 
     elif status == 'Open':
         opens = opens + 1
         cursor.execute ("""\
             UPDATE emails_campaign
-            SET opens=%d
+            SET opens=%s
             WHERE tag1=%s AND tag2=%s
-        """, (opens, tag1, tag2))
+        """, (int(opens), tag1, tag2))
 
 
     connection.commit()
