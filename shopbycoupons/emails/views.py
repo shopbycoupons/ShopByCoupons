@@ -189,7 +189,7 @@ def unsubscribe(request):
         WHERE email=%s
     """, (status, date, eid))
 
-    unsubscribes = cursor.execute("select unsubscribes from emails_campaign")
+    unsubscribes = cursor.execute("select unsubscribes from emails_campaign where tag1=%s and tag2=%s", (tag1, tag2))
     unsubscribes = unsubscribes + 1
     cursor.execute ("""\
         UPDATE emails_campaign
