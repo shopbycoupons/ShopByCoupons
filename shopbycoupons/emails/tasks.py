@@ -46,7 +46,7 @@ def send_email(id, c):
 
 
     if status == 'Avoidable':
-        continue
+        ret = 'pass'
     else:
         try:
             cursor.execute("insert into ecamp (id, eid, status, date) values (%s, %s, %s, %s)", (pk, eid, status, date))
