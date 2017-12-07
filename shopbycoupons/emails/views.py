@@ -51,7 +51,7 @@ def email(request):
     opens = 0
     unsubscribes = 0
 
-    cursor.execute("insert into emails_campaign (id, tag1, tag2, sent, complaints, bounces, clicks, opens, unsubscribes) values (%s, %s, %s, %d, %d, %d, %d, %d, %d)", (date, tag1, tag2, sent,complaints, bounces, clicks, opens, unsubscribes))
+    cursor.execute("insert into emails_campaign (id, tag1, tag2, sent, complaints, bounces, clicks, opens, unsubscribes) values (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (date, tag1, tag2, int(sent), int(complaints), int(bounces), int(clicks), int(opens), int(unsubscribes)))
     connection.commit()
     connection.close()
 
