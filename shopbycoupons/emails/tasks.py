@@ -24,70 +24,69 @@ def send_email(id, c):
     tagname1 = tagvalues[0].split("=")
     tag1 = tagname1[1]
     tag2 = tagname2[1]
-    date = data['mail']['timestamp']
 
-    connection = pymysql.connect(host="localhost",user=proddbuser, passwd=proddbpass, database=proddbname )
-    cursor = connection.cursor()
-    cursor.execute("insert into edump (id, dump) values (%s, %s)", (pk, datastr))
 
     try:
         status = data['eventType']
-        if status == 'Bounce' or status == 'Complaint' or status == 'Click' or status == 'Open':
-            cursor.execute ("""\
-                UPDATE email
-                SET status=%s, date=%s
-                WHERE email=%s
-            """, (status, date, eid))
-
     except KeyError:
-        pass
+        status = 'Avoidable'
+    date = data['mail']['timestamp']
 
-
+    if status == 'Bounce' or status == 'Complaint' or status == 'Click' or status == 'Open':
+        cursor.execute ("""\
+            UPDATE email
+            SET status=%s, date=%s
+            WHERE email=%s
+        """, (status, date, eid))
 
     complaints = cursor.execute("select complaints from emails_campaign")
     bounces = cursor.execute("select bounces from emails_campaign")
     clicks = cursor.execute("select clicks from emails_campaign")
     opens = cursor.execute("select opens from emails_campaign")
 
-    try:
-        cursor.execute("insert into ecamp (id, eid, status, date) values (%s, %s, %s, %s)", (pk, eid, status, date))
 
-        if status == 'Bounce':
-            bounces = bounces + 1
-            cursor.execute ("""\
-                UPDATE emails_campaign
-                SET bounces=%s
-                WHERE tag1=%s AND tag2=%s
-            """, (int(bounces), tag1, tag2))
+    if status == 'Avoidable':
+        continue
+    else:
+        try:
+            cursor.execute("insert into ecamp (id, eid, status, date) values (%s, %s, %s, %s)", (pk, eid, status, date))
 
-        elif status == 'Complaint':
-            complaints = complaints + 1
-            cursor.execute ("""\
-                UPDATE emails_campaign
-                SET complaints=%s
-                WHERE tag1=%s AND tag2=%s
-            """, (int(complaints), tag1, tag2))
+            if status == 'Bounce':
+                bounces = bounces + 1
+                cursor.execute ("""\
+                    UPDATE emails_campaign
+                    SET bounces=%s
+                    WHERE tag1=%s AND tag2=%s
+                """, (int(bounces), tag1, tag2))
 
-        elif status == 'Click':
-            clicks = clicks + 1
-            cursor.execute ("""\
-                UPDATE emails_campaign
-                SET clicks=%s
-                WHERE tag1=%s AND tag2=%s
-            """, (int(clicks), tag1, tag2))
+            elif status == 'Complaint':
+                complaints = complaints + 1
+                cursor.execute ("""\
+                    UPDATE emails_campaign
+                    SET complaints=%s
+                    WHERE tag1=%s AND tag2=%s
+                """, (int(complaints), tag1, tag2))
 
-        elif status == 'Open':
-            opens = opens + 1
-            cursor.execute ("""\
-                UPDATE emails_campaign
-                SET opens=%s
-                WHERE tag1=%s AND tag2=%s
-            """, (int(opens), tag1, tag2))
+            elif status == 'Click':
+                clicks = clicks + 1
+                cursor.execute ("""\
+                    UPDATE emails_campaign
+                    SET clicks=%s
+                    WHERE tag1=%s AND tag2=%s
+                """, (int(clicks), tag1, tag2))
 
-    except pymysql.err.IntegrityError as e:
-        if e.args[0] == 1062:
-            ret = 'pass'
-            pass
+            elif status == 'Open':
+                opens = opens + 1
+                cursor.execute ("""\
+                    UPDATE emails_campaign
+                    SET opens=%s
+                    WHERE tag1=%s AND tag2=%s
+                """, (int(opens), tag1, tag2))
+
+        except pymysql.err.IntegrityError as e:
+            if e.args[0] == 1062:
+                ret = 'pass'
+                pass
 
 
 
