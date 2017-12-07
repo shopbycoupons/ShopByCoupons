@@ -45,7 +45,13 @@ def email(request):
     listofemails = [x.strip() for x in listofemails]
     sent = len (listofemails)
     date = datetime.now()
-    cursor.execute("insert into emails_campaign (id, tag1, tag2, sent) values (%s, %s, %s, %s)", (date, tag1, tag2, sent))
+    complaints = 0
+    bounces = 0
+    clicks = 0
+    opens = 0
+    unsubscribes = 0
+
+    cursor.execute("insert into emails_campaign (id, tag1, tag2, sent, complaints, bounces, clicks, opens, unsubscribes) values (%s, %s, %s, %d, %d, %d, %d, %d, %d)", (date, tag1, tag2, sent,complaints, bounces, clicks, opens, unsubscribes))
     connection.commit()
     connection.close()
 

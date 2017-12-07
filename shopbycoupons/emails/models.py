@@ -20,11 +20,11 @@ class campaign(models.Model):
     tag1 = models.CharField(max_length=100, blank=True, null=True)
     tag2 = models.CharField(max_length=100, blank=True, null=True)
     sent = models.IntegerField(blank=True, null=True)
-    unsubscribes = models.IntegerField(default = 0)
-    complaints = models.IntegerField(default = 0)
-    bounces = models.IntegerField(default = 0)
-    opens = models.IntegerField(default = 0)
-    clicks = models.IntegerField(default = 0)
+    unsubscribes = models.IntegerField(blank=True, null=True)
+    complaints = models.IntegerField(blank=True, null=True)
+    bounces = models.IntegerField(blank=True, null=True)
+    opens = models.IntegerField(blank=True, null=True)
+    clicks = models.IntegerField(blank=True, null=True)
 
 
     def __str__(self):
