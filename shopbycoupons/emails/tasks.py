@@ -44,11 +44,21 @@ def send_email(id, c):
             WHERE email=%s
         """, (status, date, eid))
 
-    complaints = cursor.execute("select complaints from emails_campaign where tag1=%s and tag2=%s", (tag1, tag2))
-    bounces = cursor.execute("select bounces from emails_campaign where tag1=%s and tag2=%s", (tag1, tag2))
-    clicks = cursor.execute("select clicks from emails_campaign where tag1=%s and tag2=%s", (tag1, tag2))
-    opens = cursor.execute("select opens from emails_campaign where tag1=%s and tag2=%s", (tag1, tag2))
+    cursor.execute("select complaints from emails_campaign where tag1=%s and tag2=%s", (tag1, tag2))
+    complaint = cursor.fetchall()
+    complaints = complaint[0][0]
 
+    cursor.execute("select bounces from emails_campaign where tag1=%s and tag2=%s", (tag1, tag2))
+    bounce = cursor.fetchall()
+    bounces = bounce[0][0]
+
+    cursor.execute("select clicks from emails_campaign where tag1=%s and tag2=%s", (tag1, tag2))
+    click = cursor.fetchall()
+    clicks = click[0][0]
+
+    cursor.execute("select opens from emails_campaign where tag1=%s and tag2=%s", (tag1, tag2))
+    opened = cursor.fetchall()
+    opens = opened[0][0]
 
     if status == 'Avoidable':
         ret = 'pass'
