@@ -17,6 +17,7 @@ def send_email(id, c):
     data = json.loads(c)
     eid = data['mail']['destination']
 
+    datastr = str(data)
     tagheader= data['mail']['headers'][1]['value']
     tagvalues = tagheader.split(",")
     tagname2 = tagvalues[1].split("=")
@@ -33,7 +34,7 @@ def send_email(id, c):
 
     connection = pymysql.connect(host="localhost",user=proddbuser, passwd=proddbpass, database=proddbname )
     cursor = connection.cursor()
-    cursor.execute("insert into edump (id, dump) values (%s, %s)", (pk, data))
+    cursor.execute("insert into edump (id, dump) values (%s, %s)", (pk, datastr))
     if status == 'Bounce' or status == 'Complaint' or status == 'Click' or status == 'Open':
         cursor.execute ("""\
             UPDATE email
