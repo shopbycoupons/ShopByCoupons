@@ -32,6 +32,9 @@ def send_email(id, c):
         status = 'Avoidable'
     date = data['mail']['timestamp']
 
+    connection = pymysql.connect(host="localhost",user=proddbuser, passwd=proddbpass, database=proddbname )
+    cursor = connection.cursor()
+    
     if status == 'Bounce' or status == 'Complaint' or status == 'Click' or status == 'Open':
         cursor.execute ("""\
             UPDATE email
