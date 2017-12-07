@@ -42,4 +42,15 @@ class ecamp(models.Model):
         db_table = 'ecamp'
 
     def __str__(self):
-        return self.mid
+        return self.eid
+
+class edump(models.Model):
+    id = models.CharField(max_length=100, primary_key=True)
+    dump = models.CharField(max_length=5000, blank=True, null=True)
+
+    class Meta:
+
+        db_table = 'edump'
+
+    def __str__(self):
+        return self.id

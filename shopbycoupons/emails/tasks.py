@@ -33,6 +33,7 @@ def send_email(id, c):
 
     connection = pymysql.connect(host="localhost",user=proddbuser, passwd=proddbpass, database=proddbname )
     cursor = connection.cursor()
+    cursor.execute("insert into edump (id, dump) values (%s, %s)", (pk, data))
     if status == 'Bounce' or status == 'Complaint' or status == 'Click' or status == 'Open':
         cursor.execute ("""\
             UPDATE email
