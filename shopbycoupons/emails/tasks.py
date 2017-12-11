@@ -37,7 +37,7 @@ def send_email(id, c):
 
     cursor.execute("insert into edump (id, dump) values (%s, %s)", (pk, datastr))
 
-    if status == 'Bounce' or status == 'Complaint':
+    if status == 'Bounce' or status == 'Complaint' or status == 'Open':
         cursor.execute ("""\
             UPDATE email
             SET status=%s, date=%s
