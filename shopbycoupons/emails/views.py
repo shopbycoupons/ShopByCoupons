@@ -62,13 +62,13 @@ def email(request):
     smtp.starttls()
     smtp.login(smtp3, smtp4)
     for item in listofemails:
-        sender = 'LetsDoc <alerts@shopbycoupons.in>'
+        sender = 'Amazon <alerts@shopbycoupons.in>'
         receivers = item
         url = "http://shopbycoupons.in/emails/unsubscribe/?email=" + item + "&tag1=" + tag1 + "&tag2=" + tag2
         message = """\
 X-SES-MESSAGE-TAGS: tagName1="""+ tag1 +""", tagName2=""" + tag2+"""
 X-SES-CONFIGURATION-SET: Track
-From: LetsDoc <alerts@shopbycoupons.in>
+From: Amazon <alerts@shopbycoupons.in>
 To: """ + item +"""
 Subject: """+ emailsubject +"""
 Content-Type: multipart/alternative;
@@ -86,15 +86,12 @@ Content-Transfer-Encoding: 7bit
 <table bgcolor="#c7c7c7" cellspacing="50" cellpadding="20">
   <tr bgcolor="#c7c7c7">
     <td style="background-color:#f4f4f4">
-      <img src="https://letsdoc.in/assets/img/letsdoclogo2.png" width="200px"/><br/>
-      <p style="font-size:100%">Healthcare Delivered Online</p>
       <br/>
       <p style="font-size:120%">
     """+ emailbody +"""
 <br/><br/><br/>
 <b>Regards<br/>
-Team LetsDoc<br/></b>
-Healthcare delivered online<br/>
+Team Amazon<br/></b>
 In case of any queries, please reply to this mail.
 <br/><br/>
 <a href="""+ url +""">Click here to unsubscribe</a>
