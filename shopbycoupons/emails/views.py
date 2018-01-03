@@ -83,9 +83,6 @@ body
 Content-Type: text/html; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-<a target="_blank" href="https://www.amazon.in/b?_encoding=UTF8&tag=l01c1-21&linkCode=ur2&linkId=4b7eda6e4d58467cad93cd1287f8dfae&camp=3638&creative=24630&node=1571271031"><img src="https://images-eu.ssl-images-amazon.com/images/G/31//img16/men-apparel/Winter-Wonderland17/Banners/1024x400._CB511885585_.jpg"/>
-</a>
-
 <table bgcolor="#c7c7c7" cellspacing="50" cellpadding="20">
   <tr bgcolor="#c7c7c7">
     <td style="background-color:#f4f4f4">
