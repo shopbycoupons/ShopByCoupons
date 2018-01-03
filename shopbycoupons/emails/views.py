@@ -106,7 +106,10 @@ In case of any queries, please reply to this mail.
 
 ------=_boundary--
 """
-        smtp.sendmail(sender, receivers, message)
+        try:
+            smtp.sendmail(sender, receivers, message)
+        except (smtplib.SMTPDataError):
+            continue
 
     printit = "Successfully sent email"
     smtp.quit()
