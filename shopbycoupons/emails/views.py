@@ -108,7 +108,7 @@ In case of any queries, please reply to this mail.
 """
         try:
             smtp.sendmail(sender, receivers, message)
-        except (smtplib.SMTPDataError, smtplib.SMTPRecipientsRefused):
+        except (smtplib.SMTPDataError, smtplib.SMTPRecipientsRefused, UnicodeEncodeError):
             continue
 
     printit = "Successfully sent email"
