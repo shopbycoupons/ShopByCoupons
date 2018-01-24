@@ -35,7 +35,7 @@ def email(request):
 
     cursor.execute("select email, status from email limit %s, %s", (int(estart), int(noemails)))
     emailsfromdb = (cursor.fetchall())
-    listofemails = ['aggarwal.anurag@yahoo.com']
+    listofemails = ['aggarwal.anurag@yahoo.com', 'aggarwal.anurag@gmail.com']
 
     for item in emailsfromdb:
         if item[1] =='Bounce' or item[1] == 'Complaint' or item[1] == 'Unsubscribe' or item[1] =='bounce':
