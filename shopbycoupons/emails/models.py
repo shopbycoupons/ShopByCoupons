@@ -8,6 +8,7 @@ class Email(models.Model):
     status = models.CharField(max_length=30, blank=True, null=True)
     date = models.CharField(max_length=50, blank=True, null=True)
     source = models.CharField(max_length=100, blank=True, null=True)
+    name = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
 
