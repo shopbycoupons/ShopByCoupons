@@ -17,6 +17,22 @@ class Email(models.Model):
     def __str__(self):
         return self.email
 
+class letsdoc_users(models.Model):
+    email = models.CharField(max_length=100, blank=True, null=True)
+    status = models.CharField(max_length=30, blank=True, null=True)
+    date = models.CharField(max_length=50, blank=True, null=True)
+    source = models.CharField(max_length=100, blank=True, null=True)
+    name = models.CharField(max_length=100, blank=True, null=True)
+    points = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+
+        db_table = 'letsdoc_user'
+
+    def __str__(self):
+        return self.email
+
+
 class campaign(models.Model):
     id = models.CharField(max_length=100, primary_key=True)
     tag1 = models.CharField(max_length=100, blank=True, null=True)
