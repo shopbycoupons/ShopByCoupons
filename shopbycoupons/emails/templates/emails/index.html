@@ -3,11 +3,30 @@
 <br/><br/>
 <form name="email" action="{% url 'emails:email' %}" method="post">
   {% csrf_token %}
+  Select user base:
+  <select class="form-control" id="userBase" placeholder="Select User Base" name="user_base" required onchange="show(this);">
+    <option>LetsDoc</option>
+    <option>Thyrocare Serviced</option>
+    <option>Thyrocare Not Serviced</option>
+    <option value="kg">kg</option>
+  </select>
+
+  <div id="number" style="display: none;">
   Send emails starting from:<br>
   <input type="text" name="emailstart"><br>
   Number of emails to be sent:<br>
   <input type="text" name="numberofemails"><br>
+</div>
+<script>
+function show(that) {
+        if (that.value == "kg") {
 
+            document.getElementById("number").style.display = "block";
+        } else {
+            document.getElementById("number").style.display = "none";
+        }
+    }
+</script>
   Tag1:<br>
   <input type="text" name="tag1"><br>
 
