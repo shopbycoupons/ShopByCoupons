@@ -121,7 +121,7 @@ Content-Transfer-Encoding: 7bit
   <tr bgcolor="#c7c7c7">
     <td style="background-color:#f4f4f4">
       <img src="https://letsdoc.in/assets/img/letsdoclogo2.png" width="150px"/><br/>
-      <p style="font-size:100%">Healthcare Delivered Online</p>
+      
       <br/>
       <p style="font-size:120%">
       """+ username + """<br/><br/>
