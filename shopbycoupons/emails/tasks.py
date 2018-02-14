@@ -38,11 +38,10 @@ def send_email(id, c):
     cursor.execute("insert into edump (id, dump) values (%s, %s)", (pk, datastr))
 
     if status == 'Bounce' or status == 'Complaint' or status == 'Open':
-        cursor.execute ("""\
-            UPDATE email
-            SET status=%s, date=%s
-            WHERE email=%s
-        """, (status, date, eid))
+        if "kg" in  tag1:
+            cursor.execute("update email set status=%s, date=%s where email=%s", (status, date, eid))
+        else:
+            cursor.execute("update letsdoc_user set status=%s, date=%s where email=%s", (status, date, eid))
 
     cursor.execute("select complaints from emails_campaign where tag1=%s and tag2=%s", (tag1, tag2))
     complaint = cursor.fetchall()

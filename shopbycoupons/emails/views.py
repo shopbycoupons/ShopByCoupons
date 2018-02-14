@@ -53,9 +53,11 @@ def email(request):
     elif user_base == "Thyrocare Serviced":
         cursor.execute("select email, status, name from letsdoc_user where source='Thyrocare Serviced'")
         emailsfromdb = (cursor.fetchall())
-    else:
+    elif user_base == "Thyrocare Not Serviced":
         cursor.execute("select email, status, name from letsdoc_user where source='Thyrocare Not Serviced'")
         emailsfromdb = (cursor.fetchall())
+    else:
+        emailsfromdb = []
 
 
     listofemails = ['aggarwal.anurag@yahoo.com', 'aggarwal.anurag@gmail.com', 'anish.swaminathan@gmail.com']
@@ -91,13 +93,16 @@ def email(request):
             username = "Hi " + nameofuser[counter]
         else:
             username = "Hi"
-        sender = 'LetsDoc <alerts@shopbycoupons.in>'
+        if user_base == "kg":
+            sender = 'LetsDoc <alerts@shopbycoupons.in>'
+        else:
+            sender = 'Letsdoc <support@letsdoc.in>'
         receivers = item
         url = "http://shopbycoupons.in/emails/unsubscribe/?email=" + item + "&tag1=" + tag1 + "&tag2=" + tag2
         message = """\
 X-SES-MESSAGE-TAGS: tagName1="""+ tag1 +""", tagName2=""" + tag2+"""
 X-SES-CONFIGURATION-SET: Track
-From: LetsDoc <alerts@shopbycoupons.in>
+From: """+ sender +"""
 To: """ + item +"""
 Subject: """+ emailsubject +"""
 Content-Type: multipart/alternative;
@@ -115,7 +120,7 @@ Content-Transfer-Encoding: 7bit
 <table bgcolor="#c7c7c7" cellspacing="50" cellpadding="20">
   <tr bgcolor="#c7c7c7">
     <td style="background-color:#f4f4f4">
-      <img src="https://letsdoc.in/assets/img/letsdoclogo2.png" width="200px"/><br/>
+      <img src="https://letsdoc.in/assets/img/letsdoclogo2.png" width="150px"/><br/>
       <p style="font-size:100%">Healthcare Delivered Online</p>
       <br/>
       <p style="font-size:120%">
@@ -216,11 +221,10 @@ def unsubscribe(request):
     status = 'Unsubscribe'
     connection = pymysql.connect(host="localhost",user=proddbuser, passwd=proddbpass, database=proddbname )
     cursor = connection.cursor()
-    cursor.execute ("""\
-        UPDATE email
-        SET status=%s, date=%s
-        WHERE email=%s
-    """, (status, date, eid))
+    if "kg" in tag1:
+        cursor.execute("update email set status=%s, date=%s where email = %s", (status, date, eid))
+    else:
+        cursor.execute("update letsdoc_user set status=%s, date=%s where email = %s", (status, date, eid))
 
     cursor.execute("select unsubscribes from emails_campaign where tag1=%s and tag2=%s", (tag1, tag2))
     unsubscribe = cursor.fetchall()
