@@ -26,21 +26,46 @@ def email(request):
 
     content = list(request.POST.items())
     values = dict(content)
+    user_base = values["user_base"]
     tag1 = values["tag1"]
     tag2 = values["tag2"]
     emailsubject = values["emailsubject"]
     emailbody = values["emailbody"]
-    estart = values["emailstart"]
-    noemails = values["numberofemails"]
+    if user_base == "kg":
+        estart = values["emailstart"]
+        noemails = values["numberofemails"]
+    elif user_base == "LetsDoc":
+        ld_user = values["ld_user"]
 
-    cursor.execute("select email, status from email limit %s, %s", (int(estart), int(noemails)))
-    emailsfromdb = (cursor.fetchall())
-    listofemails = ['aggarwal.anurag@yahoo.com', 'aggarwal.anurag@gmail.com']
+    if user_base == "kg":
+        cursor.execute("select email, status from email limit %s, %s", (int(estart), int(noemails)))
+        emailsfromdb = (cursor.fetchall())
+    elif user_base == "LetsDoc":
+        if ld_user =="All":
+            cursor.execute("select email, status, name from letsdoc_user where source='LetsDoc'")
+            emailsfromdb = (cursor.fetchall())
+        elif ld_user =="Users with points":
+            cursor.execute("select email, status, name from letsdoc_user where source='LetsDoc' and points<>0")
+            emailsfromdb = (cursor.fetchall())
+        else:
+            cursor.execute("select email, status, name from letsdoc_user where source='LetsDoc' and points=0")
+            emailsfromdb = (cursor.fetchall())
+    elif user_base == "Thyrocare Serviced":
+        cursor.execute("select email, status, name from letsdoc_user where source='Thyrocare Serviced'")
+        emailsfromdb = (cursor.fetchall())
+    else:
+        cursor.execute("select email, status, name from letsdoc_user where source='Thyrocare Not Serviced'")
+        emailsfromdb = (cursor.fetchall())
 
+
+    listofemails = ['aggarwal.anurag@yahoo.com', 'aggarwal.anurag@gmail.com', 'anish.swaminathan@gmail.com']
+    nameofuser = ['Anurag', 'Anurag Aggarwal', 'Anish']
     for item in emailsfromdb:
         if item[1] =='Bounce' or item[1] == 'Complaint' or item[1] == 'Unsubscribe' or item[1] =='bounce':
             continue
         listofemails.append(item[0])
+        if user_base != "kg":
+            nameofuser.append(item[2])
 
     listofemails = [x.strip() for x in listofemails]
     sent = len (listofemails)
@@ -61,7 +86,11 @@ def email(request):
     smtp.connect(svcpvd, 25)
     smtp.starttls()
     smtp.login(smtp3, smtp4)
-    for item in listofemails:
+    for counter, item in enumerate(listofemails):
+        if nameofuser[counter]:
+            username = "Hi " + nameofuser[counter]
+        else:
+            username = "Hi"
         sender = 'LetsDoc <alerts@shopbycoupons.in>'
         receivers = item
         url = "http://shopbycoupons.in/emails/unsubscribe/?email=" + item + "&tag1=" + tag1 + "&tag2=" + tag2
@@ -90,6 +119,7 @@ Content-Transfer-Encoding: 7bit
       <p style="font-size:100%">Healthcare Delivered Online</p>
       <br/>
       <p style="font-size:120%">
+      """+ username + """<br/><br/>
     """+ emailbody +"""
 <br/><br/><br/>
 <b>Regards<br/>

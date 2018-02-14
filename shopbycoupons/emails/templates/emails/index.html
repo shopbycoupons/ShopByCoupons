@@ -5,29 +5,42 @@
   {% csrf_token %}
   Select user base:
   <select class="form-control" id="userBase" placeholder="Select User Base" name="user_base" required onchange="show(this);">
-    <option>LetsDoc</option>
+    <option value="ld">LetsDoc</option>
     <option>Thyrocare Serviced</option>
     <option>Thyrocare Not Serviced</option>
     <option value="kg">kg</option>
   </select>
-
+<br/>
   <div id="number" style="display: none;">
   Send emails starting from:<br>
   <input type="text" name="emailstart"><br>
   Number of emails to be sent:<br>
   <input type="text" name="numberofemails"><br>
 </div>
+
+<div id="points" style="display: none;"><br/>
+Select LetsDoc Users:<br/>
+<select class="form-control" id="lduser" placeholder="Select LetsDoc Base" name="ld_user" required>
+  <option>All</option>
+  <option>Users with points</option>
+  <option>Users without points</option>
+  </select>
+</div>
 <script>
 function show(that) {
         if (that.value == "kg") {
 
             document.getElementById("number").style.display = "block";
+        } else if (that.value == "ld") {
+            document.getElementById("points").style.display = "block";
         } else {
-            document.getElementById("number").style.display = "none";
+          document.getElementById("number").style.display = "none";
+          document.getElementById("points").style.display = "none";
+
         }
     }
 </script>
-<br/><br/>
+<br/>
   Tag1:<br>
   <input type="text" name="tag1"><br>
 
