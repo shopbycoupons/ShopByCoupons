@@ -5,9 +5,9 @@
   {% csrf_token %}
   Select user base:
   <select class="form-control" id="userBase" placeholder="Select User Base" name="user_base" required onchange="show(this);">
-    <option value="ld">LetsDoc</option>
-    <option>Thyrocare Serviced</option>
-    <option>Thyrocare Not Serviced</option>
+    <option value="LetsDoc">LetsDoc</option>
+    <option value="Thyrocare Serviced">Thyrocare Serviced</option>
+    <option value="Thyrocare Not Serviced">Thyrocare Not Serviced</option>
     <option value="kg">kg</option>
     <option>Test</option>
   </select>
@@ -22,9 +22,9 @@
 <div id="points" style="display: none;"><br/>
 Select LetsDoc Users:<br/>
 <select class="form-control" id="lduser" placeholder="Select LetsDoc Base" name="ld_user" required>
-  <option>All</option>
-  <option>Users with points</option>
-  <option>Users without points</option>
+  <option value="All">All</option>
+  <option value="Users with points">Users with points</option>
+  <option value="Users without points">Users without points</option>
   </select>
 </div>
 <script>
@@ -32,7 +32,7 @@ function show(that) {
         if (that.value == "kg") {
 
             document.getElementById("number").style.display = "block";
-        } else if (that.value == "ld") {
+        } else if (that.value == "LetsDoc") {
             document.getElementById("points").style.display = "block";
         } else {
           document.getElementById("number").style.display = "none";
