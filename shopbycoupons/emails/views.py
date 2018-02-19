@@ -96,7 +96,7 @@ def email(request):
         if user_base == "kg":
             sender = 'LetsDoc <alerts@shopbycoupons.in>'
         else:
-            sender = 'Letsdoc <support@letsdoc.in>'
+            sender = 'LetsDoc <reports@letsdoc.in>'
         receivers = item
         url = "http://shopbycoupons.in/emails/unsubscribe/?email=" + item + "&tag1=" + tag1 + "&tag2=" + tag2
         message = """\
@@ -121,7 +121,7 @@ Content-Transfer-Encoding: 7bit
   <tr bgcolor="#c7c7c7">
     <td style="background-color:#f4f4f4">
       <img src="https://letsdoc.in/assets/img/letsdoclogo2.png" width="150px"/><br/>
-      
+
       <br/>
       <p style="font-size:120%">
       """+ username + """<br/><br/>
