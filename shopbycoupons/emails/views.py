@@ -149,7 +149,7 @@ In case of any queries, please reply to this mail.
     printit = "Successfully sent email"
     smtp.quit()
 
-    return HttpResponse(printit)
+    return HttpResponse(values)
 
 @csrf_exempt
 def aws(request):
