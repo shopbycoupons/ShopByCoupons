@@ -96,7 +96,7 @@ def email(request):
         if user_base == "kg":
             sender = 'LetsDoc <alerts@shopbycoupons.in>'
         else:
-            sender = 'Nirog <support@letsdoc.in>'
+            sender = 'LetsDoc <support@letsdoc.in>'
         receivers = item
         url = "http://shopbycoupons.in/emails/unsubscribe/?email=" + item + "&tag1=" + tag1 + "&tag2=" + tag2
         message = """\
