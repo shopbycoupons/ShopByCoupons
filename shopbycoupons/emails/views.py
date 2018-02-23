@@ -120,9 +120,7 @@ Content-Transfer-Encoding: 7bit
 <table bgcolor="#c7c7c7" cellspacing="50" cellpadding="20">
   <tr bgcolor="#c7c7c7">
     <td style="background-color:#f4f4f4">
-      <img src="https://letsdoc.in/assets/img/letsdoclogo2.png" width="150px"/><br/>
-
-      <br/>
+      
       <p style="font-size:120%">
       """+ username + """<br/><br/>
     """+ emailbody +"""
