@@ -89,14 +89,13 @@ def email(request):
     smtp.starttls()
     smtp.login(smtp3, smtp4)
     for counter, item in enumerate(listofemails):
-        if nameofuser[counter]:
-            username = "Hi " + nameofuser[counter]
-        else:
+        if user_base == "kg" or "kg Test":
             username = "Hi"
-        if user_base == "kg" or user_base == "kg Test":
             sender = 'LetsDoc <alerts@shopbycoupons.in>'
         else:
+            username = "Hi " + nameofuser[counter]
             sender = 'LetsDoc <support@letsdoc.in>'
+                
         receivers = item
         url = "http://shopbycoupons.in/emails/unsubscribe/?email=" + item + "&tag1=" + tag1 + "&tag2=" + tag2
         message = """\
