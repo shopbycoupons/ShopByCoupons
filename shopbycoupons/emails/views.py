@@ -93,7 +93,7 @@ def email(request):
             username = "Hi " + nameofuser[counter]
         else:
             username = "Hi"
-        if user_base == "kg":
+        if user_base == "kg" or user_base == "kg Test":
             sender = 'LetsDoc <alerts@shopbycoupons.in>'
         else:
             sender = 'LetsDoc <support@letsdoc.in>'
@@ -120,7 +120,7 @@ Content-Transfer-Encoding: 7bit
 <table bgcolor="#c7c7c7" cellspacing="50" cellpadding="20">
   <tr bgcolor="#c7c7c7">
     <td style="background-color:#f4f4f4">
-      
+
       <p style="font-size:120%">
       """+ username + """<br/><br/>
     """+ emailbody +"""
