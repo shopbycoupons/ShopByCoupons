@@ -16,6 +16,9 @@ from .tasks import send_email
 from datetime import datetime
 from emails.models import *
 from django.core.mail import EmailMessage, EmailMultiAlternatives
+from django.template import Context, Template
+from django.template.loader import get_template
+
 
 @login_required
 def index(request):
