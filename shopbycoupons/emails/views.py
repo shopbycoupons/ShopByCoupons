@@ -14,6 +14,7 @@ import requests
 from django.contrib.auth.decorators import login_required
 from .tasks import send_email
 from datetime import datetime
+from emails.models import *
 
 @login_required
 def index(request):
@@ -21,9 +22,6 @@ def index(request):
 
 
 def email(request):
-    connection = pymysql.connect(host="localhost",user=proddbuser, passwd=proddbpass, database=proddbname )
-    cursor = connection.cursor()
-
     content = list(request.POST.items())
     values = dict(content)
     user_base = values["user_base"]
@@ -38,36 +36,35 @@ def email(request):
         ld_user = values["ld_user"]
 
     if user_base == "kg":
-        cursor.execute("select email, status from email limit %s, %s", (int(estart), int(noemails)))
-        emailsfromdb = (cursor.fetchall())
+        emailsfromdb = email.objects.order_by('id')[estart:noemails]
+
     elif user_base == "LetsDoc":
         if ld_user =="All":
-            cursor.execute("select email, status, name from letsdoc_user where source='LetsDoc'")
-            emailsfromdb = (cursor.fetchall())
+            emailsfromdb = letsdoc_user.objects.filter(source = 'LetsDoc')
+
         elif ld_user =="Users with points":
-            cursor.execute("select email, status, name from letsdoc_user where source='LetsDoc' and points<>0")
-            emailsfromdb = (cursor.fetchall())
+            emailsfromdb = letsdoc_user.objects.filter(source = 'LetsDoc', points__level__gt = 0)
+
         else:
-            cursor.execute("select email, status, name from letsdoc_user where source='LetsDoc' and points=0")
-            emailsfromdb = (cursor.fetchall())
+            emailsfromdb = letsdoc_user.objects.filter(source = 'LetsDoc', points = 0)
+
     elif user_base == "Thyrocare Serviced":
-        cursor.execute("select email, status, name from letsdoc_user where source='Thyrocare Serviced'")
-        emailsfromdb = (cursor.fetchall())
+        emailsfromdb = letsdoc_user.objects.filter(source = 'Thyrocare Serviced')
+
     elif user_base == "Thyrocare Not Serviced":
-        cursor.execute("select email, status, name from letsdoc_user where source='Thyrocare Not Serviced'")
-        emailsfromdb = (cursor.fetchall())
+        emailsfromdb = letsdoc_user.objects.filter(source = 'Thyrocare Not Serviced')
+
     else:
         emailsfromdb = []
-
 
     listofemails = ['aggarwal.anurag@yahoo.com', 'aggarwal.anurag@gmail.com', 'anish.swaminathan@gmail.com']
     nameofuser = ['Anurag', 'Anurag Aggarwal', 'Anish']
     for item in emailsfromdb:
-        if item[1] =='Bounce' or item[1] == 'Complaint' or item[1] == 'Unsubscribe' or item[1] =='bounce':
+        if item.status =='Bounce' or item.status == 'Complaint' or item.status == 'Unsubscribe' or item.status =='bounce':
             continue
-        listofemails.append(item[0])
+        listofemails.append(item.email)
         if user_base != "kg":
-            nameofuser.append(item[2])
+            nameofuser.append(item.name)
 
     listofemails = [x.strip() for x in listofemails]
     sent = len (listofemails)
@@ -78,16 +75,12 @@ def email(request):
     opens = 0
     unsubscribes = 0
 
-    cursor.execute("insert into emails_campaign (id, tag1, tag2, sent, complaints, bounces, clicks, opens, unsubscribes) values (%s, %s, %s, %s, %s, %s, %s, %s, %s)", (date, tag1, tag2, int(sent), int(complaints), int(bounces), int(clicks), int(opens), int(unsubscribes)))
-    connection.commit()
-    connection.close()
+    campaign_details = emails_campaign (id = date, tag1 = tag1, tag2 = tag2, sent = sent, complaints = complaints, bounces = bounces, clicks = clicks, opens = opens, unsubscribes = unsubscribes)
+    campaign_details.save()
 
+    t1 = 'tagName1='+tag1
+    t2 = 'tagName2='+tag2
 
-
-    smtp = smtplib.SMTP()
-    smtp.connect(svcpvd, 25)
-    smtp.starttls()
-    smtp.login(smtp3, smtp4)
     for counter, item in enumerate(listofemails):
         if user_base == "kg" or user_base == "kg Test":
             username = "Hi"
@@ -96,55 +89,16 @@ def email(request):
             username = "Hi " + nameofuser[counter]
             sender = 'LetsDoc <support@letsdoc.in>'
 
-        receivers = item
         url = "http://shopbycoupons.in/emails/unsubscribe/?email=" + item + "&tag1=" + tag1 + "&tag2=" + tag2
-        message = """\
-X-SES-MESSAGE-TAGS: tagName1="""+ tag1 +""", tagName2=""" + tag2+"""
-X-SES-CONFIGURATION-SET: Track
-From: """+ sender +"""
-To: """ + item +"""
-Subject: """+ emailsubject +"""
-Content-Type: multipart/alternative;
-    boundary="----=_boundary"
 
-------=_boundary
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-
-body
-------=_boundary
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-
-<table bgcolor="#c7c7c7" cellspacing="50" cellpadding="20">
-  <tr bgcolor="#c7c7c7">
-    <td style="background-color:#f4f4f4">
-
-      <p style="font-size:120%">
-      """+ username + """<br/><br/>
-    """+ emailbody +"""
-<br/><br/><br/>
-<b>Regards<br/>
-Team LetsDoc<br/></b>
-Healthcare delivered online<br/>
-In case of any queries, please reply to this mail.
-<br/><br/>
-<a href="""+ url +""">Click here to unsubscribe</a>
-</p>
-</td>
-  </tr>
-
-</table>
-
-------=_boundary--
-"""
-        try:
-            smtp.sendmail(sender, receivers, message)
-        except (smtplib.SMTPDataError, smtplib.SMTPRecipientsRefused, UnicodeEncodeError):
-            continue
-
-    printit = "Successfully sent email"
-    smtp.quit()
+        template = get_template("emails\\send_email.html")
+        context = {'username':username, 'emailbody':emailbody, 'url':url}
+        email_body = template.render(context)
+        #email_body = render_to_string(template, context)
+        text_email = strip_tags(email_body)
+        email_send = EmailMultiAlternatives(emailsubject, text_email,from=sender, to=[item], headers={'X-SES-MESSAGE-TAGS': t1, 'X-SES-MESSAGE-TAGS': t2, 'X-SES-CONFIGURATION-SET': 'Track'})
+        email_send.attach_alternative(email_body, "text/html")
+        email_send.send()
 
     return HttpResponse(user_base)
 

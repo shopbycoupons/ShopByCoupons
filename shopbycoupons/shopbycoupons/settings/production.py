@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = key
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['shopbycoupons.in', 'localhost']
 
@@ -134,3 +134,11 @@ CELERY_BROKER_URL = 'amqp://localhost'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+
+EMAIL_BACKEND = backend
+EMAIL_HOST = host_email
+EMAIL_HOST_USER = host_user_email
+EMAIL_HOST_PASSWORD = host_password_email
+EMAIL_PORT = 25
+EMAIL_USE_TLS = True
+#DEFAULT_FROM_EMAIL = 'LetsDoc <support@letsdoc.in>'
