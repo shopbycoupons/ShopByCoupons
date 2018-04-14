@@ -18,7 +18,7 @@ from emails.models import *
 from django.core.mail import EmailMessage, EmailMultiAlternatives
 from django.template import Context, Template
 from django.template.loader import get_template
-
+from django.utils.html import strip_tags
 
 @login_required
 def index(request):
