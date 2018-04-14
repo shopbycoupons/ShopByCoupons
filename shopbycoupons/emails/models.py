@@ -44,6 +44,10 @@ class campaign(models.Model):
     opens = models.IntegerField(blank=True, null=True)
     clicks = models.IntegerField(blank=True, null=True)
 
+    class Meta:
+
+        db_table = 'emails_campaign'
+
 
     def __str__(self):
         return self.tag1
