@@ -76,7 +76,7 @@ def email(request):
     opens = 0
     unsubscribes = 0
 
-    campaign_details = emails_campaign (id = date, tag1 = tag1, tag2 = tag2, sent = sent, complaints = complaints, bounces = bounces, clicks = clicks, opens = opens, unsubscribes = unsubscribes)
+    campaign_details = campaign (id = date, tag1 = tag1, tag2 = tag2, sent = sent, complaints = complaints, bounces = bounces, clicks = clicks, opens = opens, unsubscribes = unsubscribes)
     campaign_details.save()
 
     t1 = 'tagName1='+tag1
