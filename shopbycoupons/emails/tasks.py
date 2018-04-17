@@ -21,8 +21,8 @@ def send_email(id, c):
     connection = pymysql.connect(host="localhost",user=proddbuser, passwd=proddbpass, database=proddbname )
     cursor = connection.cursor()
 
-    cursor.execute("insert into edump (id, dump) values (%s, %s)", (pk, datastr))
-    
+    #cursor.execute("insert into edump (id, dump) values (%s, %s)", (pk, datastr))
+
 
     #tagheader= data['mail']['headers'][1]['value']
     #tagvalues = tagheader.split(",")
