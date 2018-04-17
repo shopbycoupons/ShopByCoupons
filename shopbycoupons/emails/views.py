@@ -44,19 +44,19 @@ def email(request):
 
     elif user_base == "LetsDoc":
         if ld_user =="All":
-            emailsfromdb = letsdoc_user.objects.filter(source = 'LetsDoc')
+            emailsfromdb = letsdoc_users.objects.filter(source = 'LetsDoc')
 
         elif ld_user =="Users with points":
-            emailsfromdb = letsdoc_user.objects.filter(source = 'LetsDoc', points__level__gt = 0)
+            emailsfromdb = letsdoc_users.objects.filter(source = 'LetsDoc', points__level__gt = 0)
 
         else:
-            emailsfromdb = letsdoc_user.objects.filter(source = 'LetsDoc', points = 0)
+            emailsfromdb = letsdoc_users.objects.filter(source = 'LetsDoc', points = 0)
 
     elif user_base == "Thyrocare Serviced":
-        emailsfromdb = letsdoc_user.objects.filter(source = 'Thyrocare Serviced')
+        emailsfromdb = letsdoc_users.objects.filter(source = 'Thyrocare Serviced')
 
     elif user_base == "Thyrocare Not Serviced":
-        emailsfromdb = letsdoc_user.objects.filter(source = 'Thyrocare Not Serviced')
+        emailsfromdb = letsdoc_users.objects.filter(source = 'Thyrocare Not Serviced')
 
     else:
         emailsfromdb = []
