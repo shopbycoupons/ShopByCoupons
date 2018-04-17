@@ -99,8 +99,8 @@ def email(request):
         context = {'username':username, 'emailbody':emailbody, 'url':url}
         email_body = template.render(context)
         #email_body = render_to_string(template, context)
-        text_email = strip_tags(email_body)
-        email_send = EmailMultiAlternatives(emailsubject, text_email, sender, to=[item], headers={'X-SES-MESSAGE-TAGS': t1, 'X-SES-MESSAGE-TAGS': t2, 'X-SES-CONFIGURATION-SET': 'Track'})
+        #text_email = strip_tags(email_body)
+        email_send = EmailMultiAlternatives(emailsubject, email_body, sender, to=[item], headers={'X-SES-MESSAGE-TAGS': t1, 'X-SES-MESSAGE-TAGS': t2, 'X-SES-CONFIGURATION-SET': 'Track'})
         email_send.attach_alternative(email_body, "text/html")
         email_send.send()
 
