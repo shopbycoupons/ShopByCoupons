@@ -15,21 +15,21 @@ def send_email(id, c):
     ret='added'
     pk = id
     data = json.loads(c)
-    eid = data['mail']['destination']
+    eid = data['mail']['destination'][0]
 
     datastr = str(data)
     connection = pymysql.connect(host="localhost",user=proddbuser, passwd=proddbpass, database=proddbname )
     cursor = connection.cursor()
 
     cursor.execute("insert into edump (id, dump) values (%s, %s)", (pk, datastr))
-    connection.commit()
+    
 
-    tagheader= data['mail']['headers'][1]['value']
-    tagvalues = tagheader.split(",")
-    tagname2 = tagvalues[1].split("=")
-    tagname1 = tagvalues[0].split("=")
-    tag1 = tagname1[1]
-    tag2 = tagname2[1]
+    #tagheader= data['mail']['headers'][1]['value']
+    #tagvalues = tagheader.split(",")
+    tag1 = data['mail']['headers'][8]['value'].split("=")[1]
+    tag2 = tag1
+    #tag1 = tagname1[1]
+    #tag2 = tagname2[1]
 
 
     try:
@@ -64,45 +64,37 @@ def send_email(id, c):
     if status == 'Avoidable':
         ret = 'pass'
     else:
-        try:
-            cursor.execute("insert into ecamp (id, eid, status, date) values (%s, %s, %s, %s)", (pk, eid, status, date))
+        if status == 'Bounce':
+            bounces = bounces + 1
+            cursor.execute ("""\
+                UPDATE emails_campaign
+                SET bounces=%s
+                WHERE tag1=%s AND tag2=%s
+            """, (int(bounces), tag1, tag2))
 
-            if status == 'Bounce':
-                bounces = bounces + 1
-                cursor.execute ("""\
-                    UPDATE emails_campaign
-                    SET bounces=%s
-                    WHERE tag1=%s AND tag2=%s
-                """, (int(bounces), tag1, tag2))
+        elif status == 'Complaint':
+            complaints = complaints + 1
+            cursor.execute ("""\
+                UPDATE emails_campaign
+                SET complaints=%s
+                WHERE tag1=%s AND tag2=%s
+            """, (int(complaints), tag1, tag2))
 
-            elif status == 'Complaint':
-                complaints = complaints + 1
-                cursor.execute ("""\
-                    UPDATE emails_campaign
-                    SET complaints=%s
-                    WHERE tag1=%s AND tag2=%s
-                """, (int(complaints), tag1, tag2))
+        elif status == 'Click':
+            clicks = clicks + 1
+            cursor.execute ("""\
+                UPDATE emails_campaign
+                SET clicks=%s
+                WHERE tag1=%s AND tag2=%s
+            """, (int(clicks), tag1, tag2))
 
-            elif status == 'Click':
-                clicks = clicks + 1
-                cursor.execute ("""\
-                    UPDATE emails_campaign
-                    SET clicks=%s
-                    WHERE tag1=%s AND tag2=%s
-                """, (int(clicks), tag1, tag2))
-
-            elif status == 'Open':
-                opens = opens + 1
-                cursor.execute ("""\
-                    UPDATE emails_campaign
-                    SET opens=%s
-                    WHERE tag1=%s AND tag2=%s
-                """, (int(opens), tag1, tag2))
-
-        except pymysql.err.IntegrityError as e:
-            if e.args[0] == 1062:
-                ret = 'pass'
-                pass
+        elif status == 'Open':
+            opens = opens + 1
+            cursor.execute ("""\
+                UPDATE emails_campaign
+                SET opens=%s
+                WHERE tag1=%s AND tag2=%s
+            """, (int(opens), tag1, tag2))
 
 
 
