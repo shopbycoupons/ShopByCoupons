@@ -18,6 +18,12 @@ def send_email(id, c):
     eid = data['mail']['destination']
 
     datastr = str(data)
+    connection = pymysql.connect(host="localhost",user=proddbuser, passwd=proddbpass, database=proddbname )
+    cursor = connection.cursor()
+
+    cursor.execute("insert into edump (id, dump) values (%s, %s)", (pk, datastr))
+    connection.commit()
+
     tagheader= data['mail']['headers'][1]['value']
     tagvalues = tagheader.split(",")
     tagname2 = tagvalues[1].split("=")
@@ -32,10 +38,6 @@ def send_email(id, c):
         status = 'Avoidable'
     date = data['mail']['timestamp']
 
-    connection = pymysql.connect(host="localhost",user=proddbuser, passwd=proddbpass, database=proddbname )
-    cursor = connection.cursor()
-
-    cursor.execute("insert into edump (id, dump) values (%s, %s)", (pk, datastr))
 
     if status == 'Bounce' or status == 'Complaint' or status == 'Open':
         if "kg" in  tag1:
