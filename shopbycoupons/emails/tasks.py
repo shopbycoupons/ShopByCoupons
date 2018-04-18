@@ -27,8 +27,7 @@ def send_email(id, c):
 
     #tagheader= data['mail']['headers'][1]['value']
     #tagvalues = tagheader.split(",")
-    tag1 = 'test'
-    #data['mail']['headers'][8]['value'].split("=")[1]
+    tag1 = data['mail']['headers'][8]['value'].split("=")[1]
     tag2 = tag1
     #tag1 = tagname1[1]
     #tag2 = tagname2[1]
