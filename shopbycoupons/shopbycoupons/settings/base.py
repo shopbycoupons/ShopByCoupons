@@ -138,6 +138,6 @@ EMAIL_BACKEND = backend
 EMAIL_HOST = host_email
 EMAIL_HOST_USER = host_user_email
 EMAIL_HOST_PASSWORD = host_password_email
-EMAIL_PORT = 25
+EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 #DEFAULT_FROM_EMAIL = 'LetsDoc <support@letsdoc.in>'
