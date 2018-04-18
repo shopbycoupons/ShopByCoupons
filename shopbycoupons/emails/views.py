@@ -61,8 +61,8 @@ def email(request):
     else:
         emailsfromdb = []
 
-    listofemails = ['aggarwal.anurag@yahoo.com', 'aggarwal.anurag@gmail.com', 'anish.swaminathan@gmail.com', 'ksdjfh@dkfh.dksf']
-    nameofuser = ['Anurag', 'Anurag Aggarwal', 'Anish', 'Bounce']
+    listofemails = ['aggarwal.anurag@yahoo.com', 'aggarwal.anurag@gmail.com', 'anish.swaminathan@gmail.com']
+    nameofuser = ['Anurag', 'Anurag Aggarwal', 'Anish']
     for item in emailsfromdb:
         if item.status =='Bounce' or item.status == 'Complaint' or item.status == 'Unsubscribe' or item.status =='bounce':
             continue
