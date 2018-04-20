@@ -113,18 +113,14 @@ def aws(request):
     l = m['HTTP_X_AMZ_SNS_MESSAGE_ID']
     b= a['Type']
     c= a['Message']
-    if 'eventType' in c:
-        if c['eventType'] != 'Delivery':
-            if b=='Notification':
-                d = send_email.delay(l, c)
-                return HttpResponse(d)
-            elif b=='SubscriptionConfirmation' and a['TopicArn']== tarn:
-                z = requests.get(a['SubscribeURL'])
-                return HttpResponse(z)
-            else:
-                return HttpResponse('error')
-
-
+    if b=='Notification':
+        d = send_email.delay(l, c)
+        return HttpResponse(d)
+    elif b=='SubscriptionConfirmation' and a['TopicArn']== tarn:
+        z = requests.get(a['SubscribeURL'])
+        return HttpResponse(z)
+    else:
+        return HttpResponse('error')
 
 
 def subscribe(request):

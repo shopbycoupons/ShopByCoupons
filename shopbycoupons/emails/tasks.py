@@ -33,13 +33,11 @@ def send_email(id, c):
         #tag1 = tagname1[1]
         #tag2 = tagname2[1]
 
-
         try:
             status = data['eventType']
         except KeyError:
             status = 'Avoidable'
         date = data['mail']['timestamp']
-
 
         if status == 'Bounce' or status == 'Complaint' or status == 'Open':
             if "kg" in  tag1:
@@ -97,8 +95,6 @@ def send_email(id, c):
                     SET opens=%s
                     WHERE tag1=%s AND tag2=%s
                 """, (int(opens), tag1, tag2))
-
-
 
 
     except IndexError:
