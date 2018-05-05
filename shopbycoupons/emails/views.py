@@ -34,8 +34,8 @@ def email(request):
     emailsubject = values["emailsubject"]
     emailbody = values["emailbody"]
     if user_base == "kg":
-        estart = values["emailstart"]
-        noemails = values["numberofemails"]
+        estart = int(values["emailstart"])
+        noemails = int(values["numberofemails"])
     elif user_base == "LetsDoc":
         ld_user = values["ld_user"]
 
