@@ -40,7 +40,7 @@ def email(request):
         ld_user = values["ld_user"]
 
     if user_base == "kg":
-        emailsfromdb = email.objects.order_by('id')[estart:noemails]
+        emailsfromdb = email.objects.all().order_by('id')[estart:noemails]
 
     elif user_base == "LetsDoc":
         if ld_user =="All":
